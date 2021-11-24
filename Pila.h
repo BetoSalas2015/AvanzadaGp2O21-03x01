@@ -12,7 +12,7 @@ typedef struct Nodo nodo;	//  Definimos el nuevo tipo de dato nodo
 nodo *push(nodo *raiz, char dato);
 void imprimePila(nodo *raiz);
 nodo *pop(nodo *raiz, char *dato);
-nodo *stackTop(nodo *raiz, char *dato);
+char stackTop(nodo *raiz)
 int isEmpty(nodo *tope);
 
 //  Definición de las funciones
@@ -74,11 +74,12 @@ nodo *pop(nodo *raiz, char *dato)
 	}
 }
 
-nodo *stackTop(nodo *raiz, char *dato)
-{
+char stackTop(nodo *raiz)		// prec(stackTop(pila), symb)
+{ 
+	char dato;
 	if(raiz != NULL)			//  Si podemos sacar información de la lista
 	{
-		*dato = raiz ->info;
+		dato = raiz ->info;
 		return raiz;
 	}
 	else            //No hay nada que sacar - Error deUnderflow!
