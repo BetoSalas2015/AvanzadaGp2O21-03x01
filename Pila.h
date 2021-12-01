@@ -1,22 +1,32 @@
 #include <malloc.h>		// "Memory ALLOCation" - Asignacion de memoria -
+#include <stdio.h>
+
+union Datos
+{
+	char car;
+	float numero;
+};
+
+typedef union Datos datos;
 
 struct Nodo 
 {
-	char info;
+	datos info;
 	struct Nodo *sig;
 };						//  DEfinimos las características del Nodo
 
 typedef struct Nodo nodo;	//  Definimos el nuevo tipo de dato nodo
 
+
 //   Prototipos
-nodo *push(nodo *raiz, char dato);
+nodo *push(nodo *raiz, datos dato);
 void imprimePila(nodo *raiz);
-nodo *pop(nodo *raiz, char *dato);
-char stackTop(nodo *raiz)
+nodo *pop(nodo *raiz, datos *dato);
+char stackTop(nodo *raiz);
 int isEmpty(nodo *tope);
 
 //  Definición de las funciones
-nodo *push(nodo *raiz, char dato)	
+nodo *push(nodo *raiz, datos dato)	
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
@@ -46,14 +56,14 @@ void imprimePila(nodo *raiz)
 	nodo *recorre = raiz;
 	while( recorre != NULL )		//  ¿ultimo No es el último nodo de la lista?
 	{								//  Verdadero: Es el ultimo nodo de la lista
-		printf("%c, \n", recorre->info);
+		printf("%c - %7.3f, ", recorre->info, recorre->info);
 		recorre = recorre -> sig;			//  Avanzo al siguiente nodo de la lista
 	}
 	putchar('\n');
 }
 
 
-nodo *pop(nodo *raiz, char *dato)
+nodo *pop(nodo *raiz, datos *dato)
 {
 	nodo *siguiente = NULL, *elimina = NULL;
 	;
@@ -79,7 +89,7 @@ char stackTop(nodo *raiz)		// prec(stackTop(pila), symb)
 	char dato;
 	if(raiz != NULL)			//  Si podemos sacar información de la lista
 	{
-		dato = raiz ->info;
+		dato = raiz ->info.car;
 		return raiz;
 	}
 	else            //No hay nada que sacar - Error deUnderflow!
